@@ -1,0 +1,63 @@
+[gd_scene load_steps=13 format=3 uid="uid://ong733ot3qpv"]
+
+[ext_resource type="PackedScene" uid="uid://cvx506pufea61" path="res://Island Assets/islandRC.glb" id="1_1qhwq"]
+[ext_resource type="Script" path="res://testing.gd" id="1_2cpgs"]
+[ext_resource type="PackedScene" uid="uid://d3iltuk2vtymc" path="res://player.tscn" id="1_emwi3"]
+[ext_resource type="Material" uid="uid://wkuu41vhchww" path="res://envMap.tres" id="2_64vdt"]
+[ext_resource type="Material" uid="uid://bbyph1tv6q4o4" path="res://dirt.tres" id="5_qyarl"]
+[ext_resource type="Material" uid="uid://brcq6u2q3mb5f" path="res://poop.tres" id="6_c8x5m"]
+
+[sub_resource type="Gradient" id="Gradient_brfeo"]
+colors = PackedColorArray(0, 0, 0.188235, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_31n0o"]
+gradient = SubResource("Gradient_brfeo")
+fill_from = Vector2(1, 0.656593)
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_yixtt"]
+rayleigh_color = Color(0.303433, 0.557537, 0.851164, 1)
+ground_color = Color(1, 1, 1, 1)
+night_sky = SubResource("GradientTexture2D_31n0o")
+
+[sub_resource type="Sky" id="Sky_048je"]
+sky_material = SubResource("PhysicalSkyMaterial_yixtt")
+
+[sub_resource type="Environment" id="Environment_b5p03"]
+background_mode = 2
+sky = SubResource("Sky_048je")
+glow_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.025
+volumetric_fog_emission_energy = 566.89
+volumetric_fog_ambient_inject = 1.4
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_dyl5t"]
+material = ExtResource("6_c8x5m")
+size = Vector2(2800, 2800)
+
+[node name="Testing" type="Node3D"]
+script = ExtResource("1_2cpgs")
+
+[node name="Player" parent="." instance=ExtResource("1_emwi3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.0895, 0)
+
+[node name="islandRC" parent="." instance=ExtResource("1_1qhwq")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 0, 0, 0)
+
+[node name="Island" parent="islandRC" index="0"]
+surface_material_override/0 = ExtResource("2_64vdt")
+
+[node name="Plane" parent="islandRC" index="1"]
+surface_material_override/0 = ExtResource("5_qyarl")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.155452, 0.987844, 0, -0.987844, 0.155452, 0, 33.2928, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_b5p03")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.68431, 0)
+mesh = SubResource("PlaneMesh_dyl5t")
+
+[editable path="islandRC"]

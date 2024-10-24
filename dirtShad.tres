@@ -1,0 +1,50 @@
+[gd_resource type="VisualShader" load_steps=5 format=3 uid="uid://dkul0tpujsode"]
+
+[ext_resource type="Texture2D" uid="uid://gv6da1u85mpa" path="res://Island Assets/islandDirt.png" id="3_s0ilv"]
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_geshl"]
+texture = ExtResource("3_s0ilv")
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_l3n30"]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_4j3ky"]
+default_input_values = [0, Vector3(0, 0, 0), 1, Vector3(30, 30, 1)]
+operator = 2
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+uniform sampler2D tex_frg_3;
+
+
+
+void fragment() {
+// Input:6
+	vec2 n_out6p0 = UV;
+
+
+// VectorOp:9
+	vec3 n_in9p1 = vec3(30.00000, 30.00000, 1.00000);
+	vec3 n_out9p0 = vec3(n_out6p0, 0.0) * n_in9p1;
+
+
+// Texture2D:3
+	vec4 n_out3p0 = texture(tex_frg_3, vec2(n_out9p0.xy));
+
+
+// Output:0
+	ALBEDO = vec3(n_out3p0.xyz);
+
+
+}
+"
+nodes/fragment/0/position = Vector2(780, -260)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_geshl")
+nodes/fragment/3/position = Vector2(-860, 640)
+nodes/fragment/6/node = SubResource("VisualShaderNodeInput_l3n30")
+nodes/fragment/6/position = Vector2(-2220, 560)
+nodes/fragment/9/node = SubResource("VisualShaderNodeVectorOp_4j3ky")
+nodes/fragment/9/position = Vector2(-1280, 500)
+nodes/fragment/connections = PackedInt32Array(6, 0, 9, 0, 9, 0, 3, 0, 3, 0, 0, 0)

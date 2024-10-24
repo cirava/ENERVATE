@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://brcq6u2q3mb5f"]
+
+[ext_resource type="Shader" path="res://water.gdshader" id="1_3b6l7"]
+[ext_resource type="Texture2D" uid="uid://gxla1pf3h41y" path="res://water.png" id="1_f8t8g"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v5gka"]
+albedo_texture = ExtResource("1_f8t8g")
+uv1_scale = Vector3(4, 4, 4)
+
+[resource]
+render_priority = 0
+next_pass = SubResource("StandardMaterial3D_v5gka")
+shader = ExtResource("1_3b6l7")
